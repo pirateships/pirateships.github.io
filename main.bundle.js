@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<audio #audioOption>\n    <source src='../assets/sound/boom.wav' type=\"audio/wav\">\n</audio>\n<div class=\"map\">\n    <div class=\"scroll\">\n        <p class=\"blurb\" *ngIf=\"!channel\">This is a game that needs to be played with Amazon's Alexa.</p>\n        <p class=\"blurb\" *ngIf=\"channel && !alexaBoard && !userBoard\">Your game is active, to see the board, ask Alexa</p>\n        <div *ngIf=\"channel\" class=\"boards\">\n            <ng-container *ngIf=\"alexaBoard\">\n                <div class=\"alexa-board board\">\n                    <h1>Alexa</h1>\n                    <ul *ngFor=\"let row of alexaBoard; let rowIdx = index\">\n                        <li *ngFor=\"let column of row; let colIdx = index\">\n                            <img *ngIf=\"column === 'X'\" class=\"miss\" src=\"../assets/images/miss.png\"/>\n                            <app-sprite *ngIf=\"column === 'B'\" src=\"./assets/images/fire.png\"\n                                        spriteName=\"alexa-{{rowIdx}}-{{colIdx}}\" spriteHeight=\"40\" spriteWidth=\"82\"\n                                        frames=\"8\"></app-sprite>\n                            {{tempBoard[rowIdx][colIdx].toUpperCase()}}\n                        </li>\n                    </ul>\n                </div>\n            </ng-container>\n            <ng-container *ngIf=\"userBoard\">\n                <div class=\"user-board board\">\n                    <h1>Your Fleet</h1>\n                    <ul *ngFor=\"let row of userBoard; let rowIdx = index\">\n                        <li *ngFor=\"let column of row; let colIdx = index\">\n                            <img *ngIf=\"column === 'X'\" class=\"miss\" src=\"../assets/images/miss.png\"/>\n                            <app-sprite *ngIf=\"column === 'B'\" src=\"./assets/images/fire.png\"\n                                        spriteName=\"user-{{rowIdx}}-{{colIdx}}\" spriteHeight=\"40\" spriteWidth=\"82\"\n                                        frames=\"8\"></app-sprite>\n                            {{tempBoard[rowIdx][colIdx].toUpperCase()}}\n                        </li>\n                    </ul>\n                </div>\n            </ng-container>\n        </div>\n    </div>\n</div>"
+module.exports = "<audio #audioOptionHit>\n    <source src='../assets/sound/boom.wav' type=\"audio/wav\">\n</audio>\n<audio #audioOptionMiss>\n    <source src='../assets/sound/miss.wav' type=\"audio/wav\">\n</audio>\n<div class=\"map\">\n    <div class=\"scroll\">\n        <p class=\"blurb\" *ngIf=\"!channel\">This is a game that needs to be played with Amazon's Alexa.</p>\n        <p class=\"blurb\" *ngIf=\"channel && !alexaBoard && !userBoard\">Your game is active, to see the board, ask Alexa</p>\n        <div *ngIf=\"channel\" class=\"boards\">\n            <ng-container *ngIf=\"alexaBoard\">\n                <div class=\"alexa-board board\">\n                    <h1>Alexa</h1>\n                    <ul *ngFor=\"let row of alexaBoard; let rowIdx = index\">\n                        <li *ngFor=\"let column of row; let colIdx = index\">\n                            <img *ngIf=\"column === 'X'\" class=\"miss\" src=\"../assets/images/miss.png\"/>\n                            <app-sprite *ngIf=\"column === 'B'\" src=\"./assets/images/fire.png\"\n                                        spriteName=\"alexa-{{rowIdx}}-{{colIdx}}\" spriteHeight=\"40\" spriteWidth=\"82\"\n                                        frames=\"8\"></app-sprite>\n                            {{tempBoard[rowIdx][colIdx].toUpperCase()}}\n                        </li>\n                    </ul>\n                </div>\n            </ng-container>\n            <ng-container *ngIf=\"userBoard\">\n                <div class=\"user-board board\">\n                    <h1>Your Fleet</h1>\n                    <ul *ngFor=\"let row of userBoard; let rowIdx = index\">\n                        <li *ngFor=\"let column of row; let colIdx = index\">\n                            <img *ngIf=\"column === 'X'\" class=\"miss\" src=\"../assets/images/miss.png\"/>\n                            <app-sprite *ngIf=\"column === 'B'\" src=\"./assets/images/fire.png\"\n                                        spriteName=\"user-{{rowIdx}}-{{colIdx}}\" spriteHeight=\"40\" spriteWidth=\"82\"\n                                        frames=\"8\"></app-sprite>\n                            {{tempBoard[rowIdx][colIdx].toUpperCase()}}\n                        </li>\n                    </ul>\n                </div>\n            </ng-container>\n        </div>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -92,8 +92,22 @@ var AppComponent = (function () {
             });
             this.pubnub.getMessage(this.channel, function (message) {
                 console.log(JSON.parse(message.message));
-                _this.audioPlayerRef.nativeElement.play();
+                /**
+                 * See if we have to play any sounds
+                 */
+                if (JSON.parse(message.message).data.soundType === 'hit') {
+                    _this.audioPlayerRefHit.nativeElement.play();
+                }
+                else if (JSON.parse(message.message).data.soundType === 'missed') {
+                    _this.audioPlayerRefMiss.nativeElement.play();
+                }
+                /**
+                 * Update User Board
+                 */
                 _this.userBoard = JSON.parse(message.message).data.userBoard;
+                /**
+                 * Update Alexa Board
+                 */
                 _this.alexaBoard = JSON.parse(message.message).data.alexaBoard;
             });
         }
@@ -118,19 +132,23 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('audioOption'),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('audioOptionHit'),
     __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
-], AppComponent.prototype, "audioPlayerRef", void 0);
+], AppComponent.prototype, "audioPlayerRefHit", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('audioOptionMiss'),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _b || Object)
+], AppComponent.prototype, "audioPlayerRefMiss", void 0);
 AppComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_pubnub_angular2__["PubNubAngular"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_pubnub_angular2__["PubNubAngular"]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_pubnub_angular2__["PubNubAngular"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_pubnub_angular2__["PubNubAngular"]) === "function" && _c || Object])
 ], AppComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
