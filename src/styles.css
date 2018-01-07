@@ -1,0 +1,144 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+@font-face {
+    font-family: 'rapscallionregular';
+    src: url('/assets/fonts/rapscall-webfont.woff2') format('woff2'),
+    url('/assets/fonts/rapscall-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    background: url('assets/images/wood-bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'rapscallionregular';
+}
+
+.map {
+    background: url('assets/images/map-bg.png') no-repeat center center fixed;
+    background-size: auto 100%;
+    height: 80vh;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+}
+
+.scroll {
+    background: url('assets/images/scroll-bg.png') no-repeat center center fixed;
+    background-size: auto 100%;
+    height: 60vh;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+}
+
+.boards {
+    font-size: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.boards h1 {
+    font-size: 40px;
+}
+
+.boards li {
+    background: #30858E;
+    border: 1px solid #469BA4;
+    color: #469BA4;
+    font-size: 20px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    width: 40px;
+}
+
+.boards .board {
+    display: inline-block;
+}
+
+.boards .board:first-child {
+    margin-right: 20px;
+}
+
+.boards .miss {
+    left: 50%;
+    max-width: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+.boards .sprite {
+    left: 50%;
+    position: absolute;
+    top: 20%;
+    transform: translate(-50%, -50%);
+}
+
+.blurb {
+    font-size: 30px;
+    margin: 100px auto 0;
+    max-width: 250px;
+}
